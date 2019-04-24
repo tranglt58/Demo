@@ -1,0 +1,17 @@
+package actions.Samsung;
+
+import actions.selenium.utils.Elements;
+import actions.selenium.Browser;
+import org.openqa.selenium.WebElement;
+
+import java.util.*;
+
+class SendKeysToElement{
+    public void run(HashMap<String, String> params){
+        WebElement element = Elements.find(params,Browser.Driver);
+        
+        if (params.get("ID") != null) {
+            element.sendKeys(params.get("Text"));
+        }
+    }
+}
