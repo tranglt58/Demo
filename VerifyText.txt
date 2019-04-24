@@ -1,0 +1,19 @@
+package actions.Samsung;
+
+
+import actions.selenium.utils.Elements;
+import actions.selenium.Browser;
+import org.openqa.selenium.WebElement;
+import static org.junit.Assert.assertEquals;
+import java.util.*;
+
+class VerifyText{
+    public void run(HashMap<String, String> params){
+         WebElement element = Elements.find(params,Browser.Driver);
+        
+        String actual_Text = element.getText();
+        String expectation_Text = params.get("Text");
+        
+        assertEquals(expectation_Text, actual_Text);
+    }
+}
