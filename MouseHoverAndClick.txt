@@ -1,0 +1,30 @@
+package actions.Samsung;
+
+import actions.selenium.Browser;
+import org.openqa.selenium.*;
+import org.openqa.selenium.support.ui.Select;
+import org.openqa.selenium.interactions.Action;
+import org.openqa.selenium.interactions.Actions;
+import org.openqa.selenium.support.ui.WebDriverWait;
+
+import java.util.*;
+
+
+class MouseHoverAndClick{
+    public void run(HashMap<String, Object> params){
+        
+        Actions act = new Actions(Browser.Driver);
+        
+        WebElement hoverAction = Browser.Driver.findElement(By.xpath(""+params.get("hoverArea")));
+      	act.moveToElement(hoverAction).build().perform();
+        
+        Actions action = new Actions(Browser.Driver);
+        action.moveToElement(hoverAction).clickAndHold();
+        
+        WebElement clickAction = Browser.Driver.findElement(By.xpath(""+params.get("clickArea")));
+        action.moveToElement(clickAction);
+        action.click().build().perform();
+           
+        
+    }
+}
