@@ -1,0 +1,47 @@
+package actions.Samsung;
+
+
+import actions.selenium.Browser;
+import org.openqa.selenium.*;
+import org.openqa.selenium.support.ui.Select;
+import org.openqa.selenium.interactions.Action;
+import org.openqa.selenium.interactions.Actions;
+import org.openqa.selenium.support.ui.WebDriverWait;
+import static org.junit.Assert.assertEquals;
+
+import java.util.*;
+
+class VerifyLoginStatus{
+    public void run(HashMap<String, String> params){
+        
+        if (params.get("Email").equals(params.get("ExpectationEmail")) && params.get("Password").equals(params.get("ExpectationPassword"))) {
+            
+	    WebDriverWait wait = new WebDriverWait(Browser.Driver, 5); 
+            WebElement canCel = Browser.Driver.findElement(By.xpath("//div[@class='iam-cancel-linkArea']/a[@class='iam-link-btn']"));
+            canCel.click();
+            Actions act = new Actions(Browser.Driver);
+            WebElement hoverAction = Browser.Driver.findElement(By.xpath("//span[@class='icon-gnb-logout account-login no-rtl']"));
+      	    act.moveToElement(hoverAction).build().perform();
+           //WebElement logOutText = Browser.Driver.findElement(By.xpath("//li[@class='visible-xs visible-sm']//li[2]/a"));
+            WebElement logOutText = Browser.Driver.findElement(By.xpath("//div[@class='logout-text']"));
+            
+            String logOutText_Actual = logOutText.getText();
+            String logOutText_Expectation = "Log Out";
+            assertEquals(logOutText_Expectation, logOutText_Actual);
+            
+        } 
+        else if (params.get("Email").equals(params.get("ExpectationEmail")) && params.get("Password")!=params.get("ExpectationPassword")) {
+            WebElement error_Msg1 = Browser.Driver.findElement(By.xpath("//div[@class='ng-binding']"));
+            String error_Msg1_Actual = error_Msg1.getText();
+            String error_Msg1_Expectation = "Incorrect ID or password.";
+            assertEquals(error_Msg1_Expectation, error_Msg1_Actual);
+            
+        } 
+        else if (params.get("Email")!=params.get("ExpectationEmail") && params.get("Password")!=params.get("ExpectationPassword")) {
+            WebElement error_Msg2 = Browser.Driver.findElement(By.xpath("//div[@class='ng-binding']"));
+            String error_Msg2_Actual2 = error_Msg2.getText();
+            String error_Msg2_Expectation = "Incorrect ID or password.";
+            assertEquals(error_Msg2_Expectation, error_Msg2_Actual2);
+        }
+    }
+}
